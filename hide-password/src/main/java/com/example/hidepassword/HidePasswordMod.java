@@ -1,13 +1,88 @@
 package com.example.hidepassword;
 
+import com.example.hidepassword.config.HidePasswordConfig;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import org.lwjgl.glfw.GLFW;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class HidePasswordMod implements ModInitializer {
 
     public static final String MOD_ID = "hide-password";
 
+    public static HidePasswordConfig CONFIG;
+
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static Path configPath;
+
+    private static KeyBinding toggleKey;
+
     @Override
     public void onInitialize() {
-        System.out.println("HidePassword mod loaded");
+
+        configPath = FabricLoader.getInstance()
+                .getConfigDir()
+                .resolve("hide-password.json");
+
+        loadConfig();
+
+        System.out.println("HidePassword loaded, enabled=" + CONFIG.enabled);
+
+        toggleKey = KeyBindingHelper.registerKeyBinding(
+            new KeyBinding(
+                "key.hidepassword.toggle",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_F8,
+                KeyBinding.Category.MISC
+            )
+        );
+
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (toggleKey.wasPressed()) {
+                CONFIG.enabled = !CONFIG.enabled;
+                saveConfig();
+                System.out.println("HidePassword enabled = " + CONFIG.enabled);
+                if (client.player != null) {
+                    client.player.sendMessage(
+                        net.minecraft.text.Text.literal(
+                                "HidePassword " + (CONFIG.enabled ? "ON" : "OFF")
+                        ),
+                        true
+                    );
+                }
+            }
+        });
+    }
+
+    private static void loadConfig() {
+        try {
+            if (Files.exists(configPath)) {
+                CONFIG = GSON.fromJson(Files.readString(configPath), HidePasswordConfig.class);
+            } else {
+                CONFIG = new HidePasswordConfig();
+                saveConfig();
+            }
+        } catch (Exception e) {
+            CONFIG = new HidePasswordConfig();
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveConfig() {
+        try {
+            Files.writeString(configPath, GSON.toJson(CONFIG));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

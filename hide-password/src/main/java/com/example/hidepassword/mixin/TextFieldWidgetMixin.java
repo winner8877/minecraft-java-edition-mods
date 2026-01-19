@@ -1,4 +1,5 @@
 package com.example.hidepassword.mixin;
+import com.example.hidepassword.HidePasswordMod;
 
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -43,6 +44,9 @@ public abstract class TextFieldWidgetMixin {
             float delta,
             CallbackInfo ci
     ) {
+        if(!HidePasswordMod.CONFIG.enabled){
+            return;
+        }
         hidepassword$real = this.text;
 
         String masked = maskIfNeeded(hidepassword$real);
