@@ -1,5 +1,6 @@
 package com.example.autogreeting;
 
+import com.example.autogreeting.rules.StringMatchRules;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
@@ -21,6 +22,11 @@ public class AutoGreetingConfig {
 
 	public boolean otherEnabled = true;
 	public List<String> otherGreetings = new ArrayList<>();
+
+	public StringMatchRules otherBlacklist = new StringMatchRules();
+	public StringMatchRules otherBlacklistExcept = new StringMatchRules();
+	public StringMatchRules otherWhitelist = new StringMatchRules();
+	public StringMatchRules otherWhitelistExcept = new StringMatchRules();
 
 	public static AutoGreetingConfig load() {
 		if (!Files.exists(CONFIG_PATH)) {

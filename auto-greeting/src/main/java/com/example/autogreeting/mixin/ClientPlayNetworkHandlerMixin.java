@@ -21,14 +21,23 @@ public class ClientPlayNetworkHandlerMixin {
 		if (System.currentTimeMillis() - AutoGreetingMod.joinWorldAt < 1000) return;
 
 		if (!packet.getActions().contains(PlayerListS2CPacket.Action.ADD_PLAYER)) return;
-
 		MinecraftClient client = MinecraftClient.getInstance();
 		if (client.player == null) return;
 
 		packet.getEntries().forEach(entry -> {
 			String name = entry.profile().name();
 
-			if (name.equals(client.player.getName().getString())) return;
+			if(AutoGreetingMod.CONFIG.otherBlacklist.match(name) && !AutoGreetingMod.CONFIG.otherBlacklistExcept.match(name)) {
+				return;
+			}
+			
+			if(!AutoGreetingMod.CONFIG.otherWhitelist.isEmpty() && (!AutoGreetingMod.CONFIG.otherWhitelist.match(name) || AutoGreetingMod.CONFIG.otherWhitelistExcept.match(name))) {
+				return;
+			}
+
+			if (name.equals(client.player.getName().getString())) {
+				return;
+			}
 
 			AutoGreetingDelay.greetAfter1Second(name);
 		});
