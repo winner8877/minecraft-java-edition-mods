@@ -1,0 +1,21 @@
+{
+	"schemaVersion": 1,
+	"id": "auto-greeting",
+	"version": "${version}",
+	"name": "Auto Greeting",
+	"description": "Automatically sends greeting messages when joining a server",
+	"authors": [
+		"Wenhan"
+	],
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"com.example.autogreeting.AutoGreetingMod"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.18.0",
+		"fabric-api": "*",
+		"minecraft": "1.21.11"
+	}
+}
