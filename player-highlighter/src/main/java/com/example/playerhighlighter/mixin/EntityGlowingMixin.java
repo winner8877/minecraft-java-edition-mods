@@ -12,21 +12,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Entity.class)
 public abstract class EntityGlowingMixin {
 
-    @Inject(method = "isGlowing", at = @At("HEAD"), cancellable = true)
-    private void playerhighlighter$glowOnlyWhenTabPressed(CallbackInfoReturnable<Boolean> cir) {
-        Entity self = (Entity) (Object) this;
+	@Inject(method = "isGlowing", at = @At("HEAD"), cancellable = true)
+	private void playerhighlighter$glowOnlyWhenTabPressed(CallbackInfoReturnable<Boolean> cir) {
+		Entity self = (Entity) (Object) this;
 
-        if (!(self instanceof PlayerEntity)) {
-            return;
-        }
+		if (!(self instanceof PlayerEntity)) {
+			return;
+		}
 
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client == null || client.options == null) {
-            return;
-        }
+		MinecraftClient client = MinecraftClient.getInstance();
+		if (client == null || client.options == null) {
+			return;
+		}
 
-        if (client.options.playerListKey.isPressed() || PlayerHighlighterMod.config.keep) {
-            cir.setReturnValue(true);
-        }
-    }
+		if (client.options.playerListKey.isPressed() || PlayerHighlighterMod.config.keep) {
+			cir.setReturnValue(true);
+		}
+	}
 }

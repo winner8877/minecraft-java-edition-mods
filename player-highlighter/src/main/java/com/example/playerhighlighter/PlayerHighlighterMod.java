@@ -1,7 +1,11 @@
 package com.example.playerhighlighter;
 
+import com.example.playerhighlighter.client.HudIconRenderer;
 import com.example.playerhighlighter.PlayerHighlighterConfig;
+
+import net.minecraft.util.Identifier;
 import net.fabricmc.api.ClientModInitializer;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
@@ -41,6 +45,8 @@ public class PlayerHighlighterMod implements ClientModInitializer {
 				}
 			}
 		});
+
+		HudIconRenderer.register();
 
 		System.out.println("[PlayerHighlighter] Client initialized");
 	}
