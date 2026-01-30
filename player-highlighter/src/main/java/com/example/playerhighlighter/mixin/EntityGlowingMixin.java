@@ -1,5 +1,6 @@
 package com.example.playerhighlighter.mixin;
 
+import com.example.playerhighlighter.PlayerHighlighterMod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,7 +25,7 @@ public abstract class EntityGlowingMixin {
             return;
         }
 
-        if (client.options.playerListKey.isPressed()) {
+        if (client.options.playerListKey.isPressed() || PlayerHighlighterMod.config.keep) {
             cir.setReturnValue(true);
         }
     }
