@@ -1,4 +1,4 @@
-# Player Outline Highlighter
+# Player Highlighter
 
 A lightweight **client-side Fabric mod** that highlights players with a glowing outline while the player list is visible, without relying on any server-side mechanics.
 
