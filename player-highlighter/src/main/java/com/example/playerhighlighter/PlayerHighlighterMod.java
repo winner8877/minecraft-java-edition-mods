@@ -15,6 +15,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class PlayerHighlighterMod implements ClientModInitializer {
 	public static KeyBinding TOGGLE_KEY;
+	public static KeyBinding HOLD_KEY;
 	public static PlayerHighlighterConfig config;
 
 	@Override
@@ -24,6 +25,14 @@ public class PlayerHighlighterMod implements ClientModInitializer {
 				"key.playerhighlighter.toggle",
 				InputUtil.Type.KEYSYM,
 				GLFW.GLFW_KEY_I,
+				KeyBinding.Category.MISC
+			)
+		);
+		HOLD_KEY = KeyBindingHelper.registerKeyBinding(
+			new KeyBinding(
+				"key.playerhighlighter.hold",
+				InputUtil.Type.KEYSYM,
+				GLFW.GLFW_KEY_TAB,
 				KeyBinding.Category.MISC
 			)
 		);

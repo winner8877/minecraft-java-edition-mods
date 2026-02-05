@@ -25,7 +25,7 @@ public abstract class EntityGlowingMixin {
 			return;
 		}
 
-		if (client.options.playerListKey.isPressed() || PlayerHighlighterMod.config.keep) {
+		if (PlayerHighlighterMod.HOLD_KEY.isPressed() || PlayerHighlighterMod.config.keep) {
 			cir.setReturnValue(true);
 		}
 	}

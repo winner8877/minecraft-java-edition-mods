@@ -27,7 +27,7 @@ public final class HudIconRenderer {
 		MinecraftClient client = MinecraftClient.getInstance();
 		if (client.player == null) return;
 
-		if (!(client.options.playerListKey.isPressed() || PlayerHighlighterMod.config.keep)) {
+		if (!(PlayerHighlighterMod.HOLD_KEY.isPressed() || PlayerHighlighterMod.config.keep)) {
 			return;
 		}
 
