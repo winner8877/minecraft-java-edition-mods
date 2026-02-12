@@ -1,2 +1,2 @@
-# minecraft-java-edition-mods
+# Minecraft java edition mods
 Some mcje mods that I made.
