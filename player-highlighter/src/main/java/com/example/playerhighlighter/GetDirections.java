@@ -42,10 +42,8 @@ public final class GetDirections {
 
 		Vec3d camForward = camera.getRotationVec(1.0f);
 
-		PlayerEntity self = client.player;
-
 		for (PlayerEntity player : client.world.getPlayers()) {
-			if (player == self) {
+			if (player == camera) {
 				continue;
 			}
 			double px = player.getX();
