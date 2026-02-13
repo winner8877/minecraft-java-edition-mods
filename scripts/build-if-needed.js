@@ -42,8 +42,10 @@ for (const dir of dirs) {
 				recursive: true
 			});
 			const settingPath = path.join(extPath, "build.gradle");
+			console.log(fs.readFileSync(settingPath, "utf8"));
 			const version = fs.readFileSync(settingPath, "utf8")?.match(/^version = "(.+)"/)?.[1];
 			if (!version) {
+				hasError = true;
 				console.warn(`${dir}: Version not found.`);
 				continue
 			}
