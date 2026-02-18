@@ -10,6 +10,7 @@ import net.minecraft.item.Items;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 
 public class ClientFlyingMod implements ClientModInitializer {
 	@Override
@@ -21,26 +22,30 @@ public class ClientFlyingMod implements ClientModInitializer {
 				boolean isOkMode = gameMode == GameMode.SURVIVAL || gameMode == GameMode.ADVENTURE;
 				ItemStack chestStack = client.player.getEquippedStack(EquipmentSlot.CHEST);
 				boolean isElytra = chestStack.isOf(Items.ELYTRA);
+				boolean isInAir = !client.player.isOnGround();
 				if (isOkMode) {
+					if(isInAir && isElytra == client.player.getAbilities().allowFlying){
+						client.player.getAbilities().flying = !isElytra;
+					}
 					client.player.getAbilities().allowFlying = !isElytra;
 					client.player.sendAbilitiesUpdate();
 				}
-			}
-			ClientPlayNetworkHandler net = client.getNetworkHandler();
-			if (net != null){
-				double x = client.player.getX();
-				double y = client.player.getY();
-				double z = client.player.getZ();
+				ClientPlayNetworkHandler net = client.getNetworkHandler();
+				if (net != null){
+					double x = client.player.getX();
+					double y = client.player.getY();
+					double z = client.player.getZ();
 
-				float yaw = client.player.getYaw();
-				float pitch = client.player.getPitch();
+					float yaw = client.player.getYaw();
+					float pitch = client.player.getPitch();
 
-				net.sendPacket(new PlayerMoveC2SPacket.Full(
-					x, y, z,
-					yaw, pitch,
-					true,
-					client.player.horizontalCollision
-				));
+					net.sendPacket(new PlayerMoveC2SPacket.Full(
+						x, y, z,
+						yaw, pitch,
+						true,
+						client.player.horizontalCollision
+					));
+				}
 			}
 		});
 	}
