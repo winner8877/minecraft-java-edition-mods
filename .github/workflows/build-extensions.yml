@@ -1,4 +1,4 @@
-name: Build Needed Chrome Extensions
+name: Build Needed Java Mods
 
 on:
   workflow_dispatch:
@@ -42,7 +42,7 @@ jobs:
 
           if [ -n "$(git status --porcelain)" ]; then
             git add .
-            git commit -m "Auto-build chrome extensions by github-actions[bot]"
+            git commit -m "Auto-build Java Mods by github-actions[bot]"
             git push
           else
             echo "No changes detected, skipping commit."
