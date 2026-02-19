@@ -4,13 +4,13 @@ const {
 	execSync
 } = require("child_process");
 const root = process.cwd();
-const excluded = [".git", ".github", "docs", "node_modules", "scripts", "gradle"];
-const dataDir = path.join(root, "docs");
-if (!fs.existsSync(dataDir)) {
-	fs.mkdirSync(dataDir, {
-		recursive: true
-	})
-}
+const excluded = [".git", ".github", "data", "node_modules", "scripts", "gradle"];
+const dataDir = path.join(root, "data");
+const modDir = path.join(dataDir, "mods");
+const jarDir = path.join(dataDir, "jars");
+fs.mkdirSync(jarDir, {
+	recursive: true
+});
 const versionsPath = path.join(dataDir, "versions.json");
 let versions = {};
 if (fs.existsSync(versionsPath)) {
@@ -28,7 +28,7 @@ let hasError = false;
 for (const dir of dirs) {
 	try {
 		console.log(`Processing ${dir}...`);
-		const extensionsDir = path.join(dataDir, dir);
+		const extensionsDir = path.join(modDir, dir);
 		const extPath = path.join(root, dir);
 		const statusPath = path.join(extPath, "status.json");
 		let status = {};
@@ -72,10 +72,6 @@ for (const dir of dirs) {
 			});
 			const exportPath = path.join(extPath, "build", "libs", `${dir}-${version}.jar`);
 			if (fs.existsSync(exportPath)) {
-				const jarDir = path.join(extensionsDir, "jars");
-				fs.mkdirSync(jarDir, {
-					recursive: true
-				});
 				const targetPath = path.join(jarDir, `${dir}-${version}.jar`);
 				fs.copyFileSync(exportPath, targetPath);
 				console.log(`README copied: ${exportPath} -> ${targetPath}`)
