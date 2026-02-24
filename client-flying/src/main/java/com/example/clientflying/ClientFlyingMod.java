@@ -25,7 +25,7 @@ public class ClientFlyingMod implements ClientModInitializer {
 				boolean isInAir = !client.player.isOnGround();
 				boolean needEly = false;
 				if (isOkMode) {
-					if(isInAir && isElytra == client.player.getAbilities().allowFlying){
+					if(isInAir && isElytra == client.player.getAbilities().allowFlying) {
 						client.player.getAbilities().flying = !isElytra;
 						needEly = isElytra;
 					}
@@ -33,9 +33,9 @@ public class ClientFlyingMod implements ClientModInitializer {
 					client.player.sendAbilitiesUpdate();
 				}
 				ClientPlayNetworkHandler net = client.getNetworkHandler();
-				if (net != null){
-					if(isElytra){
-						if(needEly){
+				if (net != null) {
+					if(isElytra) {
+						if(needEly) {
 							net.sendPacket(new ClientCommandC2SPacket(
 								client.player,
 								ClientCommandC2SPacket.Mode.START_FALL_FLYING

@@ -45,7 +45,7 @@ public abstract class TextFieldWidgetMixin {
             float delta,
             CallbackInfo ci
     ) {
-        if(!HidePasswordMod.CONFIG.enabled){
+        if(!HidePasswordMod.CONFIG.enabled) {
             return;
         }
         hidepassword$real = this.text;

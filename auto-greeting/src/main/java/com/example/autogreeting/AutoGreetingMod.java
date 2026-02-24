@@ -55,7 +55,7 @@ public class AutoGreetingMod implements ClientModInitializer {
 			ctx.getSource().sendFeedback(Text.literal(title + ": appended \"" + msg + "\"."));
 			return 1;
 		});
-		if(allowAddIndex){
+		if(allowAddIndex) {
 			addArg = addArg.then(argument("index", IntegerArgumentType.integer(1))
 				.executes(ctx -> {
 					String msg = StringArgumentType.getString(ctx, "message");
